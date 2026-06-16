@@ -5,8 +5,14 @@ from sqlalchemy.orm import sessionmaker
 from backend.models import Base, Tenant, Client
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///sakria.db")
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+if "cockroachlabs.cloud" in DATABASE_URL:
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace("postgres://", "cockroachdb://", 1)
+    elif DATABASE_URL.startswith("postgresql://"):
+        DATABASE_URL = DATABASE_URL.replace("postgresql://", "cockroachdb://", 1)
+else:
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 engine = create_engine(
     DATABASE_URL, 

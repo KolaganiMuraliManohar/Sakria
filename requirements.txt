@@ -10,3 +10,4 @@ watchdog==6.0.0
 gunicorn==21.2.0
 psycopg2-binary==2.9.9
 streamlit==1.58.0
+sqlalchemy-cockroachdb==2.0.2
