@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sakria – Wellness Operator Platform for body sheet analysis, client leads management, and health metrics tracking." />
+  <meta name="theme-color" content="#6b7c5e" />
+  <title>Sakria – Wellness Operator Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════ LOGIN ═══════════════════════ -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-bg"></div>
+    <div class="login-container">
+      <div class="login-brand">
+        <div class="brand-emblem" style="background: none; box-shadow: none;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z"></path>
+            <path d="M9.8 6.1C13.5 10 15 12 19 12"></path>
+          </svg>
+        </div>
+        <h1 class="brand-name">Sakria</h1>
+        <p class="brand-tagline">Wellness Operator Platform</p>
+      </div>
+      <div class="login-card">
+        <h2 class="login-heading">Namaste, Operator</h2>
+        <p class="login-sub">Sign in to your wellness workspace</p>
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="login-username">Username</label>
+            <div class="input-wrap">
+              <span class="input-icon" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+              <input class="form-input" type="text" id="login-username" placeholder="demo" autocomplete="username" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </span>
+              <input class="form-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+            </div>
+          </div>
+          <div class="form-error hidden" id="login-error">Invalid credentials. Try again.</div>
+          <button type="submit" class="btn-primary btn-full" id="btn-login">Sign In →</button>
+        </form>
+        <p class="login-hint">Use <strong>demo</strong> / <strong>demo1234</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ APP SHELL ═══════════════════════ -->
+  <div id="app-shell" class="app-shell hidden">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Primary navigation">
+      <div class="sidebar-brand">
+        <span class="sidebar-emblem" style="background: none; display: flex; align-items: center; justify-content: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z"></path>
+            <path d="M9.8 6.1C13.5 10 15 12 19 12"></path>
+          </svg>
+        </span>
+        <span class="sidebar-title">Sakria</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-page="dashboard" id="nav-dashboard">
+          <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+              <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+              <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+            </svg>
+          </span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a class="nav-item" data-page="body-sheet" id="nav-body-sheet">
+          <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <line x1="9" y1="9" x2="15" y2="9"></line>
+              <line x1="9" y1="13" x2="15" y2="13"></line>
+              <line x1="9" y1="17" x2="15" y2="17"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Body Sheet</span>
+        </a>
+        <a class="nav-item" data-page="client-leads" id="nav-client-leads">
+          <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Client Leads</span>
+        </a>
+        <a class="nav-item" data-page="education" id="nav-education">
+          <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5-10 5z"></path>
+              <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Wellness Guide</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer" style="cursor: pointer;" onclick="Settings.openProfileModal()" title="Update Wellness Center & Coach Details">
+        <div class="op-avatar" id="sidebar-avatar">OP</div>
+        <div class="op-meta">
+          <span class="op-name" id="sidebar-name">Operator</span>
+          <span class="op-role" style="display: flex; align-items: center; gap: 4px;">
+            Wellness Pro
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </span>
+        </div>
+        <button class="btn-logout" id="btn-logout" title="Sign Out" aria-label="Sign out" onclick="event.stopPropagation();" style="display: flex; align-items: center; justify-content: center; padding: 4px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile top bar -->
+    <header class="mobile-topbar" id="mobile-topbar">
+      <button class="btn-ham" id="btn-menu-toggle" aria-label="Open navigation" style="display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; padding: 4px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-primary);">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <div class="topbar-brand" style="display: flex; align-items: center; gap: 6px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2z"></path>
+          <path d="M9.8 6.1C13.5 10 15 12 19 12"></path>
+        </svg>
+        <span>Sakria</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="topbar-avatar" id="topbar-avatar" style="cursor: pointer;" onclick="Settings.openProfileModal()" title="Update Wellness Center & Coach Details">OP</div>
+      </div>
+    </header>
+
+    <!-- Mobile drawer overlay -->
+    <div class="mob-overlay hidden" id="mob-overlay" role="presentation"></div>
+
+    <!-- Main content region -->
+    <main class="main-content" id="main-content" role="main"></main>
+
+    <!-- Mobile bottom navigation -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <a class="bnav-item active" data-page="dashboard" id="bnav-dashboard">
+        <span class="bnav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+          </svg>
+        </span>
+        <span class="bnav-label">Home</span>
+      </a>
+      <a class="bnav-item" data-page="body-sheet" id="bnav-body-sheet">
+        <span class="bnav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            <line x1="9" y1="9" x2="15" y2="9"></line>
+            <line x1="9" y1="13" x2="15" y2="13"></line>
+            <line x1="9" y1="17" x2="15" y2="17"></line>
+          </svg>
+        </span>
+        <span class="bnav-label">Body</span>
+      </a>
+      <a class="bnav-item" data-page="client-leads" id="bnav-client-leads">
+        <span class="bnav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </span>
+        <span class="bnav-label">Leads</span>
+      </a>
+      <a class="bnav-item" data-page="education" id="bnav-education">
+        <span class="bnav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5-10 5z"></path>
+            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+          </svg>
+        </span>
+        <span class="bnav-label">Guide</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Modal root -->
+  <div id="modal-root" class="modal-root hidden" role="dialog" aria-modal="true"></div>
+
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- jsPDF library for PDF conversion -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Sakria source -->
+<script src="src/store/data.js"></script>
+<script src="src/utils/helpers.js?v=2"></script>
+<script src="src/features/dashboard/dashboard.js"></script>
+<script src="src/features/body-sheet/bodySheet.js"></script>
+<script src="src/features/client-leads/clientLeads.js"></script>
+<script src="src/features/education/education.js?v=2"></script>
+<script src="src/features/settings/settings.js"></script>
+<script src="src/features/admin/admin.js?v=2"></script>
+<script src="src/features/results/results.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
