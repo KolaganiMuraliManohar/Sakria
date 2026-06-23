@@ -2,7 +2,7 @@ import os
 import datetime
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from backend.models import Base, Tenant, Client
+from backend.models import Base, Tenant, Client, ClientResult
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///sakria.db")
 if "cockroachlabs.cloud" in DATABASE_URL:

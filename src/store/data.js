@@ -240,6 +240,13 @@ const Store = {
 
         localStorage.setItem(this.getClientKey(), JSON.stringify(clientsList));
       }
+
+      // Fetch Transformation Results
+      const resRes = await fetch(`http://127.0.0.1:8000/api/results?tenant_id=${tenantId}`);
+      if (resRes.ok) {
+        const resultsList = await resRes.json();
+        localStorage.setItem(this.getResultsKey(), JSON.stringify(resultsList));
+      }
     } catch (err) {
       console.warn("FastAPI backend offline, running in offline localStorage fallback mode:", err);
     }
@@ -428,12 +435,24 @@ const Store = {
     };
     results.unshift(newResult);
     localStorage.setItem(this.getResultsKey(), JSON.stringify(results));
+
+    const tenantId = sessionStorage.getItem("sakria_tenant_id") || "t-1";
+    fetch("http://127.0.0.1:8000/api/results", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...newResult, tenant_id: tenantId })
+    }).catch(err => console.warn("Backend addResult sync failed:", err));
+
     return newResult;
   },
 
   deleteResult(resultId) {
     const results = this.getResults().filter(r => r.id !== resultId);
     localStorage.setItem(this.getResultsKey(), JSON.stringify(results));
+
+    fetch(`http://127.0.0.1:8000/api/results/${resultId}`, {
+      method: "DELETE"
+    }).catch(err => console.warn("Backend deleteResult sync failed:", err));
   }
 };
 

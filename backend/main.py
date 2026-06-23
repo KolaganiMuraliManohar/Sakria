@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from backend.models import Tenant, Client
+from backend.models import Tenant, Client, ClientResult
 from backend.database import get_db, init_db
 import uuid
 import os
@@ -402,6 +402,69 @@ async def get_system_stats(request: Request, db: Session = Depends(get_db)):
         "total_clients": total_clients,
         "active_sessions": active_sessions
     }
+
+# ── 5. TRANSFORMATION RESULTS ENDPOINTS ──
+
+@app.get("/api/results")
+async def get_results(request: Request, tenant_id: str = "t-1", db: Session = Depends(get_db)):
+    session_token = request.headers.get("X-Session-Token")
+    check_session(db, tenant_id, session_token)
+    results = db.query(ClientResult).filter(ClientResult.tenant_id == tenant_id).order_by(ClientResult.added_at.desc()).all()
+    
+    return [
+        {
+            "id": r.id,
+            "clientId": r.client_id,
+            "clientName": r.client_name,
+            "title": r.title,
+            "category": r.category,
+            "type": r.type,
+            "link": r.link,
+            "description": r.description,
+            "addedAt": r.added_at.isoformat() if r.added_at else None
+        }
+        for r in results
+    ]
+
+@app.post("/api/results")
+async def create_result(request: Request, payload: dict, db: Session = Depends(get_db)):
+    tenant_id = payload.get("tenant_id", "t-1")
+    session_token = request.headers.get("X-Session-Token")
+    check_session(db, tenant_id, session_token)
+    
+    r_id = payload.get("id") or f"r-{uuid.uuid4().hex[:8]}"
+    new_res = ClientResult(
+        id=r_id,
+        client_id=payload.get("clientId"),
+        tenant_id=tenant_id,
+        client_name=payload.get("clientName"),
+        title=payload.get("title", ""),
+        category=payload.get("category", ""),
+        type=payload.get("type", "photo"),
+        link=payload.get("link"),
+        description=payload.get("description", "")
+    )
+    db.add(new_res)
+    db.commit()
+    db.refresh(new_res)
+    return {
+        "success": True,
+        "id": new_res.id
+    }
+
+@app.delete("/api/results/{result_id}")
+async def delete_result(request: Request, result_id: str, db: Session = Depends(get_db)):
+    res = db.query(ClientResult).filter(ClientResult.id == result_id).first()
+    if not res:
+        raise HTTPException(status_code=404, detail="Result not found")
+    
+    session_token = request.headers.get("X-Session-Token")
+    check_session(db, res.tenant_id, session_token)
+    
+    db.delete(res)
+    db.commit()
+    return {"success": True}
+
 
 # Serve Frontend SPA static assets in production
 app.mount("/src", StaticFiles(directory="src"), name="src")

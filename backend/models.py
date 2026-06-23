@@ -54,3 +54,19 @@ class Client(Base):
     converted_at = Column(String, nullable=True)  # Timestamp when client converted to Active status
     
     tenant = relationship("Tenant", back_populates="clients")
+
+
+class ClientResult(Base):
+    __tablename__ = 'client_results'
+    
+    id = Column(String, primary_key=True)
+    client_id = Column(String, ForeignKey('clients.id'), nullable=True)
+    tenant_id = Column(String, ForeignKey('tenants.id'), nullable=False)
+    client_name = Column(String, nullable=True)
+    title = Column(String, nullable=False)
+    category = Column(String, nullable=False)
+    type = Column(String, nullable=False)
+    link = Column(Text, nullable=True)
+    description = Column(Text, nullable=True)
+    added_at = Column(DateTime, default=datetime.datetime.utcnow)
+
